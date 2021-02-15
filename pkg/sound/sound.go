@@ -45,6 +45,9 @@ func Sound(key rune) {
 	f, err := os.Open(filePath)
 	chk.SE(err)
 
+	// https://qiita.com/mfykmn/items/1dca6630f83f39582abf
+	// 一つのstreamから複数回読み込みをしたい...
+
 	// filePathからいちいち持ってくるのコスト掛かりそうだから、増えてきたらinitでstreamをmemoriyに上げて
 	// 消費するときは、copyして使用するようにしたい
 	streamer, _, err := mp3.Decode(f)
