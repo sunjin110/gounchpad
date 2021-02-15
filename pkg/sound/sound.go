@@ -27,6 +27,11 @@ var soundKeyMap map[rune]string = map[rune]string{
 	// 'f': "./sound/skrillex/sound_3.mp3",
 }
 
+// 多分これがバッファリングの解
+// https://github.com/faiface/beep/wiki/To-buffer,-or-not-to-buffer,-that-is-the-question
+
+var soundBufferMap map[rune]*beep.Buffer
+
 func init() {
 	// 初期化
 	err := speaker.Init(44100, 256)
@@ -34,38 +39,42 @@ func init() {
 
 	// https://game.criware.jp/learn/tutorial/unity/unity_tyukyu_03/
 	// オンメモリ再生を実現したい
+
+	soundBufferMap = make(map[rune]*beep.Buffer, len(soundKeyMap))
+
+	for r, filePath := range soundKeyMap {
+
+		f, err := os.Open(filePath)
+		chk.SE(err)
+
+		streamer, format, err := mp3.Decode(f)
+		chk.SE(err)
+
+		buffer := beep.NewBuffer(format)
+		buffer.Append(streamer)
+
+		// buffer mapに追加
+		soundBufferMap[r] = buffer
+
+		streamer.Close()
+	}
+
 }
 
 // Sound 対応する音をならす
 func Sound(key rune) {
 
-	filePath, exists := soundKeyMap[key]
+	buffer, exists := soundBufferMap[key]
 	if !exists {
-		fmt.Println("not found sound path...")
+		fmt.Println("not found sound...")
 		return
 	}
 
-	f, err := os.Open(filePath)
-	chk.SE(err)
-
-	// https://qiita.com/mfykmn/items/1dca6630f83f39582abf
-	// 一つのstreamから複数回読み込みをしたい...
-
-	// filePathからいちいち持ってくるのコスト掛かりそうだから、増えてきたらinitでstreamをmemoriyに上げて
-	// 消費するときは、copyして使用するようにしたい
-
-	streamer, _, err := mp3.Decode(f)
-	streamer.Seek(0)
-
-	chk.SE(err)
-	defer streamer.Close()
 	done := make(chan bool)
-	speaker.Play(beep.Seq(streamer, beep.Callback(
+	speaker.Play(beep.Seq(buffer.Streamer(0, buffer.Len()), beep.Callback(
 		func() {
 			done <- true
 		},
 	)))
-	// fmt.Printf("start:%s", filePath)
 	<-done
-	// fmt.Printf("end:%s", filePath)
 }
