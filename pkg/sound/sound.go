@@ -11,6 +11,7 @@ import (
 )
 
 var soundKeyMap map[rune]string = map[rune]string{
+	// piano
 	'a': "./sound/effect/c1.mp3",
 	's': "./sound/effect/d1.mp3",
 	'd': "./sound/effect/e1.mp3",
@@ -18,6 +19,8 @@ var soundKeyMap map[rune]string = map[rune]string{
 	'g': "./sound/effect/g1.mp3",
 	'h': "./sound/effect/a1.mp3",
 	'j': "./sound/effect/b1.mp3",
+	// drum
+	'z': "./sound/drum/bass.mp3",
 }
 
 func init() {
@@ -38,6 +41,8 @@ func Sound(key rune) {
 	f, err := os.Open(filePath)
 	chk.SE(err)
 
+	// filePathからいちいち持ってくるのコスト掛かりそうだから、増えてきたらinitでstreamをmemoriyに上げて
+	// 消費するときは、copyして使用するようにしたい
 	streamer, _, err := mp3.Decode(f)
 	chk.SE(err)
 	defer streamer.Close()
