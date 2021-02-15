@@ -29,8 +29,11 @@ var soundKeyMap map[rune]string = map[rune]string{
 
 func init() {
 	// 初期化
-	err := speaker.Init(44100, 44)
+	err := speaker.Init(44100, 256)
 	chk.SE(err)
+
+	// https://game.criware.jp/learn/tutorial/unity/unity_tyukyu_03/
+	// オンメモリ再生を実現したい
 }
 
 // Sound 対応する音をならす
@@ -50,7 +53,10 @@ func Sound(key rune) {
 
 	// filePathからいちいち持ってくるのコスト掛かりそうだから、増えてきたらinitでstreamをmemoriyに上げて
 	// 消費するときは、copyして使用するようにしたい
+
 	streamer, _, err := mp3.Decode(f)
+	streamer.Seek(0)
+
 	chk.SE(err)
 	defer streamer.Close()
 	done := make(chan bool)
