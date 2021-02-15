@@ -47,7 +47,7 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, os.Interrupt) // Ctrl + cで終了するようにする
+	signal.Notify(sig, os.Interrupt) // 停止signalの検知
 
 	go func() {
 		defer close(sig)
