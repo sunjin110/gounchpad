@@ -21,6 +21,10 @@ var soundKeyMap map[rune]string = map[rune]string{
 	'j': "./sound/effect/b1.mp3",
 	// drum
 	'z': "./sound/drum/bass.mp3",
+	// skrillex
+	'c': "./sound/skrillex/sound_1_v2.mp3",
+	'b': "./sound/skrillex/sound_2.mp3",
+	// 'f': "./sound/skrillex/sound_3.mp3",
 }
 
 func init() {
@@ -52,7 +56,7 @@ func Sound(key rune) {
 			done <- true
 		},
 	)))
-	fmt.Printf("start:%s", filePath)
+	// fmt.Printf("start:%s", filePath)
 	<-done
-	fmt.Printf("end:%s", filePath)
+	// fmt.Printf("end:%s", filePath)
 }
