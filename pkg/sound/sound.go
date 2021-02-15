@@ -10,6 +10,7 @@ import (
 	"github.com/faiface/beep/speaker"
 )
 
+// 文字に対してなにを鳴らすか?
 var soundKeyMap map[rune]string = map[rune]string{
 	// piano
 	'a': "./sound/effect/c1.mp3",
@@ -27,9 +28,7 @@ var soundKeyMap map[rune]string = map[rune]string{
 	// 'f': "./sound/skrillex/sound_3.mp3",
 }
 
-// 多分これがバッファリングの解
-// https://github.com/faiface/beep/wiki/To-buffer,-or-not-to-buffer,-that-is-the-question
-
+// オンメモリ再生
 var soundBufferMap map[rune]*beep.Buffer
 
 func init() {
@@ -37,11 +36,7 @@ func init() {
 	err := speaker.Init(44100, 256)
 	chk.SE(err)
 
-	// https://game.criware.jp/learn/tutorial/unity/unity_tyukyu_03/
-	// オンメモリ再生を実現したい
-
 	soundBufferMap = make(map[rune]*beep.Buffer, len(soundKeyMap))
-
 	for r, filePath := range soundKeyMap {
 
 		f, err := os.Open(filePath)
