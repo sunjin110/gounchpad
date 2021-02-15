@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"gounchpad/pkg/sound"
 	"io"
 	"log"
 	"os"
@@ -61,7 +62,8 @@ func main() {
 			clear()
 			fmt.Println(string(r))
 
-			// TODO sound
+			// sound
+			sound.Sound(r)
 
 			if r == 'q' {
 				clear()
