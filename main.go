@@ -63,7 +63,7 @@ func main() {
 			fmt.Println(string(r))
 
 			// sound
-			sound.Sound(r)
+			go sound.Sound(r)
 
 			if r == 'q' {
 				clear()
