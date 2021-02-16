@@ -32,6 +32,11 @@ func init() {
 		cmd.Run()
 	}
 
+	clearCmdMap["darwin"] = func() {
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdin
+		cmd.Run()
+	}
 	// TODO windows clean, mac clean
 }
 
