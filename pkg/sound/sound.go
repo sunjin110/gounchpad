@@ -17,8 +17,11 @@ var soundKeyMap map[rune]string = map[rune]string{
 	'd': "./sound/effect/e1.mp3",
 	'f': "./sound/effect/f1.mp3",
 	'g': "./sound/effect/g1.mp3",
-	'h': "./sound/effect/a1.mp3",
+	'h': "./sound/effect/a1_v3.mp3",
 	'j': "./sound/effect/b1.mp3",
+	// 'y': "./sound/effect/a1_v2.mp3",
+	// 'u': "./sound/effect/a1_v3.mp3",
+
 	// drum
 	'z': "./sound/drum/bass.mp3",
 	// skrillex
@@ -60,7 +63,6 @@ func Sound(key rune) {
 
 	buffer, exists := soundBufferMap[key]
 	if !exists {
-		// fmt.Println("not found sound...")
 		return
 	}
 

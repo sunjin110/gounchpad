@@ -20,15 +20,12 @@ func main() {
 	for {
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
-			// fmt.Println(string(ev.Ch))
 			// sound
 			go sound.Sound(ev.Ch)
 
-			// 画面クリア
-			// termbox.Clear(fg termbox.Attribute, bg termbox.Attribute)
+			// // 画面クリア
 			termbox.Clear(coldef, coldef)
 			termbox.SetCell(10, 10, ev.Ch, termbox.ColorWhite, termbox.AttrBold)
-
 			termbox.Flush()
 
 			// esqで終了
