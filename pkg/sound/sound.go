@@ -1,10 +1,6 @@
 package sound
 
 import (
-	"fmt"
-	// "gounchpad/lib/beep"
-	// "gounchpad/lib/beep/mp3"
-	// "gounchpad/lib/beep/speaker"
 	"gounchpad/pkg/common/chk"
 	"os"
 
@@ -64,7 +60,7 @@ func Sound(key rune) {
 
 	buffer, exists := soundBufferMap[key]
 	if !exists {
-		fmt.Println("not found sound...")
+		// fmt.Println("not found sound...")
 		return
 	}
 
