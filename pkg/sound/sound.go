@@ -28,6 +28,10 @@ var soundKeyMap map[rune]string = map[rune]string{
 	'c': "./sound/skrillex/sound_1_v2.mp3",
 	'b': "./sound/skrillex/sound_2.mp3",
 	// 'f': "./sound/skrillex/sound_3.mp3",
+	// daftpunk
+	'q': "./sound/daftpunk/daft_punk_1.mp3",
+	'w': "./sound/daftpunk/daft_punk_2_2.mp3",
+	'e': "./sound/daftpunk/daft_punk_3.mp3",
 }
 
 // オンメモリ再生
@@ -35,7 +39,7 @@ var soundBufferMap map[rune]*beep.Buffer
 
 func init() {
 	// 初期化
-	err := speaker.Init(44100, 256)
+	err := speaker.Init(44100, 44)
 	chk.SE(err)
 
 	soundBufferMap = make(map[rune]*beep.Buffer, len(soundKeyMap))
